@@ -39,13 +39,39 @@ colors = %i[
 code = Array.new(4)
 code = code.map { Random.rand(6) }
 
-code.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
-puts
+winner = false
+12.times do |turn|
+  puts "-------- Turn #{turn + 1} --------"
+  puts
+  puts "Make your 4-number guess"
+  # rubocop:disable Layout/LineLength
+  puts "1: #{'red'.colorize(:red)}, 2: #{'green'.colorize(:green)}, 3: #{'blue'.colorize(:blue)}, 4: #{'yellow'.colorize(:yellow)}, 5: #{'black'.colorize(:black)}, 6: #{'white'.colorize(:white)}"
+  # rubocop:enable Layout/LineLength
+  puts
 
-puts "Make your 4-number guess"
-# rubocop:disable Layout/LineLength
-puts "1: #{'red'.colorize(:red)}, 2: #{'green'.colorize(:green)}, 3: #{'blue'.colorize(:blue)}, 4: #{'yellow'.colorize(:yellow)}, 5: #{'black'.colorize(:black)}, 6: #{'white'.colorize(:white)}"
-# rubocop:enable Layout/LineLength
+  guess = gets.chomp.split
+  puts
+  guess = guess.map { |num| Integer(num) - 1 }
 
-guess = gets.chomp.split
-guess = guess.map { |num| Integer(num) - 1 }
+  print "Your guess:\n\n"
+  guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
+  print "\n\n"
+
+  feedback = evaluate_guess(guess, code)
+
+  if feedback[0] == 4
+    puts "You won!!!"
+    winner = true
+    break
+  end
+
+  puts "Number of correct guesses in correct position: #{feedback[0]}"
+  puts "Number of correct guesses in incorrect position: #{feedback[1]}"
+  print "\n\n"
+end
+
+unless winner
+  print "You lost, the correct code was:\n\n"
+  code.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
+  puts
+end
