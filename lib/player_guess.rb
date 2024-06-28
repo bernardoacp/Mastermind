@@ -46,14 +46,10 @@ def player_guess(colors)
       guess = guess.map { |num| Integer(num) - 1 }
       puts
     rescue ArgumentError
-      puts "Invalid guess."
-      return
+      abort("Invalid guess.")
     end
 
-    if guess.length != 4 || guess.any? { |color| color >= 6 || color.negative? }
-      puts "Invalid guess."
-      return
-    end
+    abort("Invalid guess.") if guess.length != 4 || guess.any? { |color| color >= 6 || color.negative? }
 
     print "Your guess:\n\n"
     guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
