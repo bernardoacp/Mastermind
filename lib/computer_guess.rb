@@ -1,13 +1,17 @@
 def get_feedback(feedback)
   print "Give feedback to the computer's guess\n\n"
 
-  print "Colored pegs: "
-  feedback[0] = gets.chomp.to_i
+  begin
+    print "Colored pegs: "
+    feedback[0] = Integer(gets.chomp)
+    print "White pegs:   "
+    feedback[1] = Integer(gets.chomp)
+    puts
+  rescue ArgumentError
+    abort("Invalid input.")
+  end
 
-  print "White pegs:   "
-  feedback[1] = gets.chomp.to_i
-
-  puts
+  abort("Invalid input.") if feedback.any(&:negative?) || feedback.sum > 4
 
   feedback
 end
@@ -31,8 +35,15 @@ def computer_guess(colors)
   # rubocop:enable Layout/LineLength
   puts
 
-  code = gets.chomp.split
-  code = code.map { |num| Integer(num) - 1 }
+  begin
+    guess = gets.chomp.split
+    guess = guess.map { |num| Integer(num) - 1 }
+    puts
+  rescue ArgumentError
+    abort("Invalid guess.")
+  end
+
+  abort("Invalid guess.") if guess.length != 4 || guess.any? { |color| color >= 6 || color.negative? }
 
   puts "-------- Turn 1 --------"
   puts
@@ -47,7 +58,6 @@ def computer_guess(colors)
   feedback = get_feedback(feedback)
 
   total = feedback.sum
-
   turns = 1
 
   while total != 4
@@ -67,9 +77,7 @@ def computer_guess(colors)
     print_computer_guess(colors, guess)
 
     feedback = get_feedback(feedback)
-
     total = feedback.sum if feedback.sum > total
-
     turns += 1
   end
 
@@ -90,7 +98,6 @@ def computer_guess(colors)
     print_computer_guess(colors, guess)
 
     feedback = get_feedback(feedback)
-
     turns += 1
   end
 
