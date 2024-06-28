@@ -41,9 +41,19 @@ def player_guess(colors)
     # rubocop:enable Layout/LineLength
     puts
 
-    guess = gets.chomp.split
-    guess = guess.map { |num| Integer(num) - 1 }
-    puts
+    begin
+      guess = gets.chomp.split
+      guess = guess.map { |num| Integer(num) - 1 }
+      puts
+    rescue ArgumentError
+      puts "Invalid guess."
+      return
+    end
+
+    if guess.length != 4 || guess.any? { |color| color >= 6 || color.negative? }
+      puts "Invalid guess."
+      return
+    end
 
     print "Your guess:\n\n"
     guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
