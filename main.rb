@@ -23,5 +23,5 @@ if game_mode == 1
 elsif game_mode == 2
   computer_guess(colors)
 else
-  puts "Invalid input."
+  abort("Invalid input.")
 end
