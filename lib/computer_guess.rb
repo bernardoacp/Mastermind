@@ -52,7 +52,10 @@ def computer_guess(colors)
 
   while total != 4
 
-    break if turns == 12
+    if turns == 12
+      puts "You won!!!"
+      return
+    end
 
     puts "-------- Turn #{turns + 1} --------"
     puts
@@ -70,14 +73,12 @@ def computer_guess(colors)
     turns += 1
   end
 
-  if turns == 12
-    puts "You won!!!"
-    return
-  end
-
   while feedback[0] != 4
 
-    break if turn == 12
+    if turns == 12
+      puts "You won!!!"
+      return
+    end
 
     puts "-------- Turn #{turn + 1} --------"
     puts
@@ -91,11 +92,6 @@ def computer_guess(colors)
     feedback = get_feedback(feedback)
 
     turns += 1
-  end
-
-  if turns == 12
-    puts "You won!!!"
-    return
   end
 
   puts "You lost."
