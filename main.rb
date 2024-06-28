@@ -44,8 +44,8 @@ def player_guess(colors, code)
     puts
 
     guess = gets.chomp.split
-    puts
     guess = guess.map { |num| Integer(num) - 1 }
+    puts
 
     print "Your guess:\n\n"
     guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
@@ -71,6 +71,34 @@ def player_guess(colors, code)
   puts
 end
 
+def computer_guess(colors, code)
+  guess = Array.new(4, 0)
+
+  print "Computer guess:\n\n"
+  guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
+  print "\n\n"
+
+  feedback = gets.chomp.split
+  feedback = feedback.map { |num| Integer(num) }
+
+  # binding.pry
+
+  total = feedback.sum
+
+  while total != 4
+    (total..3).each { |num| guess[num] += 1 }
+
+    print "Computer guess:\n\n"
+    guess.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
+    print "\n\n"
+
+    feedback = gets.chomp.split
+    feedback = feedback.map { |num| Integer(num) }
+
+    total = feedback.sum if feedback.sum > total
+  end
+end
+
 colors = %i[
   red
   green
@@ -80,6 +108,14 @@ colors = %i[
   white
 ]
 
+# code = generate_code
+
+# player_guess(colors, code)
+
 code = generate_code
 
-player_guess(colors, code)
+print "Code:\n\n"
+code.each { |num| print "#{colors[num].to_s.colorize(colors[num])} " }
+print "\n\n"
+
+computer_guess(colors, code)
