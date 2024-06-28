@@ -1,6 +1,5 @@
 def generate_code
-  code = Array.new(4)
-  code = code.map { Random.rand(6) }
+  Array.new(4).map { Random.rand(6) }
 end
 
 def evaluate_guess(guess, code)
@@ -29,7 +28,9 @@ def evaluate_guess(guess, code)
   [correct_same_pos, correct_diff_pos]
 end
 
-def player_guess(colors, code)
+def player_guess(colors)
+  code = generate_code
+
   winner = false
   12.times do |turn|
     puts "-------- Turn #{turn + 1} --------"
