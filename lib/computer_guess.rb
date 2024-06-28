@@ -18,7 +18,13 @@ def print_computer_guess(colors, guess)
   print "\n\n"
 end
 
-def computer_guess(colors, code)
+def computer_guess(colors)
+  puts "Create your 4-number secret code"
+  # rubocop:disable Layout/LineLength
+  puts "1: #{'red'.colorize(:red)}, 2: #{'green'.colorize(:green)}, 3: #{'blue'.colorize(:blue)}, 4: #{'yellow'.colorize(:yellow)}, 5: #{'black'.colorize(:black)}, 6: #{'white'.colorize(:white)}"
+  # rubocop:enable Layout/LineLength
+  puts
+
   guess = Array.new(4, 0)
 
   print_computer_guess(colors, guess)
